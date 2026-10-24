@@ -1,0 +1,9 @@
+{
+  "name": "Campus Safe",
+  "short_name": "Campus Safe",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fbf9ff",
+  "theme_color": "#bccaf7"
+}
