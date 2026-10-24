@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+  <link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#bccaf7">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Campus Safe</title>
 <style>
@@ -227,6 +229,16 @@ $("sendTip").onclick = function(){
 };
 $("checkin").onclick = function(){ addFeed("Check-in", "You checked in as safe"); };
 $("reset").onclick = function(){ try { localStorage.removeItem(KEY); } catch(e) {} location.reload(); };
+</script>
+  <script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js")
+      .catch(error => {
+        console.error("Service worker registration failed:", error);
+      });
+  });
+}
 </script>
 </body>
 </html>
