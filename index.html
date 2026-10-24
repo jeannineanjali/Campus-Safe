@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Campus Safe</title>
+<style>
+:root{--bg:#f1ecfa;--app:#fbf9ff;--card:#fff;--ink:#3b3558;--mute:#7a7596;--line:#ebe4f5;--blue:#6fa8e0;--navy:#bccaf7;--red:#f5a9b5;--ok:#2f7d68;--okbg:#d9f3e8;--warnbg:#fff0d4;--warn:#8a5a00;box-sizing:border-box}
+@media (min-width:99999px){:root:not([data-theme="light"]){--bg:#070b14;--app:#0e1524;--card:#16203a;--ink:#eaf0fb;--mute:#9aa8c2;--line:#26324f;--blue:#5cc0f2;--navy:#9ec2ff;--ok:#5fd3b0;--okbg:#10332a;--warnbg:#3a2c0a;--warn:#ffd27a}}
+*{box-sizing:border-box}html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;display:flex;justify-content:center;align-items:center}
+#phone{width:100%;max-width:400px;height:100vh;max-height:100dvh;background:var(--app);position:relative;display:flex;flex-direction:column;overflow:hidden;padding-top:env(safe-area-inset-top,0px)}
+@media (min-width:520px){#phone{height:780px;border-radius:38px;border:10px solid #dcd2f3;box-shadow:0 20px 50px rgba(0,0,0,.25)}}
+.top{display:flex;justify-content:space-between;align-items:center;padding:18px 20px 8px}
+.top h1{font-size:20px;line-height:1.15;margin:0;font-weight:800;max-width:230px}
+.icon{width:38px;height:38px;border-radius:50%;border:0;background:var(--card);color:var(--ink);font:inherit;font-size:18px;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.page{flex:1;overflow-y:auto;padding:8px 18px 20px;display:none}
+.page.on{display:block}
+.card{display:block;width:100%;text-align:left;font:inherit;color:var(--ink);background:var(--card);border:0;border-radius:18px;padding:18px;margin-bottom:14px;box-shadow:0 2px 10px rgba(20,33,61,.08);cursor:pointer;min-height:112px}
+.card h2{margin:0 0 6px;font-size:16px}
+.card p{margin:0;color:var(--mute);font-size:13px;max-width:200px}
+.sos{background:linear-gradient(135deg,#f8b9c4,#fcd9b6);color:#5a2a3a;min-height:150px;position:relative}
+.sos h2{font-size:24px;margin-top:34px}.sos p{color:inherit;max-width:260px}
+.sos small{position:absolute;top:14px;right:16px;font-size:11px;opacity:.9}
+.walk{display:flex;align-items:center;justify-content:space-between}
+.art{width:92px;height:80px}
+.bar{display:flex;justify-content:space-around;align-items:center;background:var(--card);border-top:1px solid var(--line);padding:8px 0 calc(10px + env(safe-area-inset-bottom,0px));position:relative}
+.tab{background:none;border:0;color:var(--mute);font:inherit;font-size:12px;cursor:pointer;padding:6px 18px}
+.tab.on{color:var(--blue);font-weight:700}
+.plus{width:54px;height:54px;margin-top:-34px;border-radius:50%;border:4px solid var(--app);background:#b5d8f7;color:var(--ink);font-size:28px;line-height:1;cursor:pointer}
+.dot{position:absolute;top:8px;right:24%;width:9px;height:9px;border-radius:50%;background:var(--red)}
+.back{background:none;border:0;color:var(--blue);font:inherit;font-weight:600;cursor:pointer;padding:4px 0 10px}
+h3{margin:0 0 4px;font-size:20px}
+.lead{color:var(--mute);margin:0 0 14px;font-size:14px}
+.btn{display:block;width:100%;text-align:center;text-decoration:none;font:inherit;font-weight:700;border:0;border-radius:12px;padding:14px;margin-bottom:10px;cursor:pointer;color:var(--ink);background:var(--navy)}
+@media (min-width:99999px){.btn.n{color:#0e1524}}
+.btn.r{background:var(--red);color:var(--ink)}.btn.o{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+label{display:block;font-weight:600;font-size:13px;margin:12px 0 5px}
+select,input,textarea{width:100%;font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:10px;padding:11px}
+textarea{min-height:96px;resize:vertical}
+.msg{border-radius:10px;padding:10px 12px;font-size:13px;margin:10px 0}
+.msg.e{background:var(--warnbg);color:var(--warn)}.msg.g{background:var(--okbg);color:var(--ok)}
+.item{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:10px}
+.item b{display:block}.item span{color:var(--mute);font-size:13px}
+details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:10px}
+summary{font-weight:700;cursor:pointer}
+details ol{margin:8px 0 0;padding-left:20px;color:var(--mute);font-size:14px}
+.pill{display:inline-block;font-size:11px;border-radius:999px;padding:1px 8px;background:var(--okbg);color:var(--ok);margin-left:6px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.timer{font-size:34px;font-weight:800;text-align:center;margin:14px 0}
+button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid #3b82f6;outline-offset:2px}
+</style>
+</head>
+<body>
+<div id="phone">
+  <div class="top"><h1 id="campusName">SRM IST</h1><button class="icon" id="gear" aria-label="Settings">&#9881;</button></div>
+
+  <section class="page on" id="home">
+    <button class="card sos" id="goSos"><small id="addr">Main Gate, SRM IST</small><h2>Emergency options</h2><p>Call or message us and we'll use your location to send help immediately.</p></button>
+    <button class="card walk" id="goWalk" style="background:#dff5ea"><div><h2>Get home safe with SafeWalk</h2><p>Have a friend virtually walk you to your destination.</p></div>
+      <svg class="art" viewBox="0 0 92 80" aria-hidden="true"><rect x="4" y="14" width="46" height="34" rx="4" fill="#fff"/><path d="M27 6a7 7 0 0 1 7 7c0 6-7 13-7 13s-7-7-7-13a7 7 0 0 1 7-7z" fill="#a8d4f5"/><circle cx="68" cy="24" r="7" fill="#ffd5c4"/><rect x="60" y="32" width="16" height="24" rx="6" fill="#ffe9a8"/><rect x="62" y="56" width="5" height="20" rx="2" fill="#c3b5f0"/><rect x="70" y="56" width="5" height="20" rx="2" fill="#c3b5f0"/></svg></button>
+    <button class="card walk" id="goRes" style="background:#e3ecfb"><div><h2>Resources</h2><p>Access safety and security info, including the Safety Map.</p></div>
+      <svg class="art" viewBox="0 0 92 80" aria-hidden="true"><rect x="12" y="24" width="14" height="50" rx="2" fill="#ffe9a8"/><rect x="28" y="14" width="14" height="60" rx="2" fill="#f7a8b4"/><rect x="44" y="8" width="14" height="66" rx="2" fill="#a8d4f5"/><rect x="60" y="20" width="16" height="54" rx="2" fill="#c3b5f0"/></svg></button>
+  </section>
+
+  <section class="page" id="sos">
+    <button class="back" data-go="home">&lsaquo; Back</button>
+    <h3>Emergency options</h3>
+    <p class="lead" id="locline">Sharing location: Main Gate, SRM IST</p>
+    <a class="btn r" href="tel:112">Call 112</a>
+    <a class="btn n" id="callSec" href="tel:+15550111">Call campus security</a>
+    <a class="btn n" id="callMed" href="tel:+15550142">Call campus medical</a>
+    <a class="btn o" id="smsSec" href="sms:+15550111?body=I%20need%20help">Message security</a>
+    <p class="lead">Sample numbers. Replace with verified campus contacts.</p>
+  </section>
+
+  <section class="page" id="walk">
+    <button class="back" data-go="home">&lsaquo; Back</button>
+    <h3>SafeWalk</h3>
+    <div id="walkForm">
+      <p class="lead">A friend follows your walk until you arrive.</p>
+      <label for="dest">Destination</label><input id="dest" placeholder="e.g. Hostel block C">
+      <label for="friend">Invite a friend</label>
+      <select id="friend"><option value="">Select friend</option></select>
+      <div id="walkErr" class="msg e" role="alert" hidden></div>
+      <button class="btn n" id="startWalk" style="margin-top:14px">Start SafeWalk</button>
+    </div>
+    <div id="walkLive" hidden>
+      <div class="msg g" id="walkInfo"></div>
+      <div class="timer" id="clock">00:00</div>
+      <button class="btn n" id="arrive">I have arrived</button>
+      <a class="btn r" href="tel:112">Need help: call 112</a>
+    </div>
+  </section>
+
+  <section class="page" id="res">
+    <button class="back" data-go="home">&lsaquo; Back</button>
+    <h3>Resources</h3>
+    <p class="lead">Emergency procedures and campus contacts.</p>
+    <details><summary>Fire</summary><ol><li>Raise the alarm and call the fire officer.</li><li>Leave by the nearest exit. Do not use lifts.</li><li>Gather at the assembly point and wait for a head count.</li></ol></details>
+    <details><summary>Medical emergency</summary><ol><li>Call campus medical or 112.</li><li>Do not move the person unless in danger.</li><li>Send someone to meet the ambulance at the gate.</li></ol></details>
+    <details><summary>Threat or lockdown</summary><ol><li>Move to a secure room and lock or block the door.</li><li>Silence your phone and stay out of sight.</li><li>Call security when it is safe to do so.</li></ol></details>
+    <h3 style="margin-top:18px;font-size:16px">Campus contacts</h3>
+    <div id="dir"></div>
+  </section>
+
+  <section class="page" id="tip">
+    <button class="back" data-go="home">&lsaquo; Back</button>
+    <h3>Submit a tip</h3>
+    <p class="lead">See something suspicious? Tell the safety team.</p>
+    <div id="tipForm">
+      <label for="tcat">Type</label>
+      <select id="tcat"><option value="">Select type</option><option>Suspicious person</option><option>Harassment</option><option>Unsafe area or lighting</option><option>Other</option></select>
+      <label for="tdesc">What happened?</label><textarea id="tdesc" placeholder="Where, when and what you saw"></textarea>
+      <label><input type="checkbox" id="anon" style="width:auto"> Send anonymously</label>
+      <div id="tipErr" class="msg e" role="alert" hidden></div>
+      <button class="btn n" id="sendTip" style="margin-top:12px">Send tip</button>
+    </div>
+    <div id="tipDone" class="msg g" hidden></div>
+  </section>
+
+  <section class="page" id="act">
+    <h3 style="margin-top:6px">Activity</h3>
+    <p class="lead">Broadcasts, check-ins and chats.</p>
+    <button class="btn n" id="checkin">Check in: I am safe</button>
+    <div id="feed"></div>
+  </section>
+
+  <section class="page" id="set">
+    <button class="back" data-go="home">&lsaquo; Back</button>
+    <h3>Settings</h3>
+    <label for="campusSel">Your campus</label>
+    <select id="campusSel"></select>
+    <label><input type="checkbox" id="notif" checked style="width:auto"> Receive safety broadcasts</label>
+    <p class="lead" style="margin-top:14px">Data source: <b id="mode">checking</b>. Contacts are sample data until verified by campus administration.</p>
+    <button class="btn o" id="reset" type="button">Clear saved data</button>
+  </section>
+
+  <nav class="bar" aria-label="Main">
+    <button class="tab on" data-go="home" id="tHome">Home</button>
+    <button class="plus" id="tPlus" aria-label="Submit a tip">+</button>
+    <button class="tab" data-go="act" id="tAct">Activity</button><span class="dot" id="dot"></span>
+  </nav>
+</div>
+
+<script>
+var $ = function(i){ return document.getElementById(i); };
+var DATA = {
+  campuses:[{code:"ist",name:"SRM IST",address:"Main Gate, SRM IST",sec:"+15550111",med:"+15550142"},{code:"trp",name:"SRM TRP",address:"Main Gate, SRM TRP",sec:"+15550211",med:"+15550242"}],
+  friends:["Rithika","Lakshana","Samyktha"],
+  contacts:{
+    ist:[{category:"Medical",name:"SRM IST Health Centre",phone:"+15550142",info:"Block B, near main gate",verified:1},{category:"Security",name:"Campus Security Control",phone:"+15550111",info:"Admin building, room 1",verified:1},{category:"Counselling",name:"Student Counselling Cell",phone:"+15550163",info:"Library annex, first floor",verified:1},{category:"Fire",name:"Fire Safety Officer",phone:"+15550177",info:"Utility block",verified:1}],
+    trp:[{category:"Medical",name:"SRM TRP Health Centre",phone:"+15550242",info:"Next to the sports complex",verified:1},{category:"Security",name:"SRM TRP Gate Security",phone:"+15550211",info:"Main gate",verified:1},{category:"Counselling",name:"Wellbeing Centre",phone:"+15550263",info:"Hostel block C",verified:1},{category:"Fire",name:"Fire Control Room",phone:"+15550277",info:"Behind the workshop block",verified:0}]
+  },
+  broadcasts:["Road closure near Gate 3 until 6 pm. Use Gate 2.","Safety drill tomorrow at 11 am in all hostels."]
+};
+var KEY = "campusSafeData";
+var store = {feed:{ist:[],trp:[]}, tips:[], walks:[], n:0};
+try { var raw = localStorage.getItem(KEY); if(raw) store = JSON.parse(raw); } catch(e) {}
+function save(){ try { localStorage.setItem(KEY, JSON.stringify(store)); } catch(e) {} }
+
+var cur = "ist", walk = null, timerId = null, secs = 0;
+function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+function when(t){ var d = new Date(t); return isNaN(d) ? t : d.toLocaleString([], {day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}); }
+function campus(){ return DATA.campuses.filter(function(c){ return c.code === cur; })[0]; }
+function feedOf(){
+  if(!store.feed[cur].length) store.feed[cur] = DATA.broadcasts.map(function(m,i){ return {kind:"Broadcast",message:m,at:i ? "Yesterday" : "Today"}; });
+  return store.feed[cur];
+}
+function addFeed(kind, message){ feedOf().unshift({kind:kind, message:message, at:new Date().toISOString()}); save(); drawFeed(); }
+
+function go(id){
+  [].forEach.call(document.querySelectorAll(".page"), function(p){ p.classList.toggle("on", p.id === id); });
+  $("tHome").classList.toggle("on", id === "home"); $("tAct").classList.toggle("on", id === "act");
+  if(id === "act") $("dot").hidden = true;
+  document.querySelector(".page.on").scrollTop = 0;
+}
+[].forEach.call(document.querySelectorAll("[data-go]"), function(b){ b.onclick = function(){ go(b.dataset.go); }; });
+$("goSos").onclick = function(){ go("sos"); }; $("goWalk").onclick = function(){ go("walk"); };
+$("goRes").onclick = function(){ go("res"); }; $("tPlus").onclick = function(){ go("tip"); }; $("gear").onclick = function(){ go("set"); };
+
+function drawDir(){
+  $("dir").innerHTML = DATA.contacts[cur].map(function(d){
+    return '<div class="item"><div class="row"><div><b>' + esc(d.name) + (d.verified ? '<span class="pill">Verified</span>' : '') + '</b><span>' + esc(d.category) + ' / ' + esc(d.info) + '</span></div><a href="tel:' + esc(d.phone) + '" style="color:var(--blue);font-weight:700;text-decoration:none">Call</a></div></div>';
+  }).join("");
+}
+function drawFeed(){
+  $("feed").innerHTML = feedOf().map(function(f){ return '<div class="item"><b>' + esc(f.kind) + '</b>' + esc(f.message) + '<br><span>' + esc(when(f.at)) + '</span></div>'; }).join("");
+}
+function loadCampus(){
+  var c = campus();
+  $("campusName").textContent = c.name; $("addr").textContent = c.address; $("locline").textContent = "Sharing location: " + c.address;
+  $("callSec").href = "tel:" + c.sec; $("callMed").href = "tel:" + c.med; $("smsSec").href = "sms:" + c.sec + "?body=I%20need%20help";
+  drawDir(); drawFeed();
+}
+$("campusSel").innerHTML = DATA.campuses.map(function(x){ return '<option value="' + x.code + '">' + esc(x.name) + '</option>'; }).join("");
+$("campusSel").onchange = function(){ cur = this.value; loadCampus(); };
+$("friend").innerHTML = '<option value="">Select friend</option>' + DATA.friends.map(function(n){ return '<option>' + esc(n) + '</option>'; }).join("");
+$("mode").textContent = "saved on this device";
+loadCampus();
+
+$("startWalk").onclick = function(){
+  var d = $("dest").value.trim(), f = $("friend").value, e = $("walkErr");
+  if(!d || !f){ e.hidden = false; e.textContent = !d ? "Enter your destination." : "Select a friend to invite."; return; }
+  e.hidden = true; walk = {friend:f, dest:d, start:new Date().toISOString(), campus:cur};
+  $("walkForm").hidden = true; $("walkLive").hidden = false;
+  $("walkInfo").textContent = f + " is watching your walk to " + d + ".";
+  secs = 0; $("clock").textContent = "00:00";
+  timerId = setInterval(function(){ secs++; $("clock").textContent = ("0"+Math.floor(secs/60)).slice(-2) + ":" + ("0"+(secs%60)).slice(-2); }, 1000);
+};
+$("arrive").onclick = function(){
+  clearInterval(timerId); walk.arrived = new Date().toISOString(); store.walks.push(walk);
+  addFeed("SafeWalk", walk.friend + " was notified that you arrived at " + walk.dest);
+  $("walkLive").hidden = true; $("walkForm").hidden = false; $("dest").value = ""; $("friend").value = ""; go("act");
+};
+
+$("sendTip").onclick = function(){
+  var t = $("tcat").value, d = $("tdesc").value.trim(), e = $("tipErr");
+  if(!t || d.length < 10){ e.hidden = false; e.textContent = !t ? "Select the type of tip." : "Describe what happened in at least 10 characters."; return; }
+  e.hidden = true; store.n++;
+  var ref = "TIP-" + ("000" + store.n).slice(-4), anon = $("anon").checked;
+  store.tips.push({ref:ref, campus:cur, type:t, description:d, anonymous:anon, at:new Date().toISOString()});
+  addFeed("Tip", ref + ": " + t + " reported");
+  $("tipForm").hidden = true; $("tipDone").hidden = false;
+  $("tipDone").textContent = "Tip received. Reference " + ref + (anon ? ". Sent anonymously." : ". The safety team may contact you.");
+  setTimeout(function(){ $("tipDone").hidden = true; $("tipForm").hidden = false; $("tcat").value = ""; $("tdesc").value = ""; go("home"); }, 3500);
+};
+$("checkin").onclick = function(){ addFeed("Check-in", "You checked in as safe"); };
+$("reset").onclick = function(){ try { localStorage.removeItem(KEY); } catch(e) {} location.reload(); };
+</script>
+</body>
+</html>
