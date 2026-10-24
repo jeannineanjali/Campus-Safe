@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Campus Safe</title>
 <style>
-:root{--bg:#f1ecfa;--app:#fbf9ff;--card:#fff;--ink:#3b3558;--mute:#7a7596;--line:#ebe4f5;--blue:#6fa8e0;--navy:#bccaf7;--red:#f5a9b5;--ok:#2f7d68;--okbg:#d9f3e8;--warnbg:#fff0d4;--warn:#8a5a00;box-sizing:border-box}
+:root{--bg:#161729;--app:#f5edcc;--card:#fff;--ink:#3b3558;--mute:#7a7596;--line:#ebe4f5;--blue:#6fa8e0;--navy:#bccaf7;--red:#f5a9b5;--ok:#2f7d68;--okbg:#d9f3e8;--warnbg:#fff0d4;--warn:#8a5a00;box-sizing:border-box}
 @media (min-width:99999px){:root:not([data-theme="light"]){--bg:#070b14;--app:#0e1524;--card:#16203a;--ink:#eaf0fb;--mute:#9aa8c2;--line:#26324f;--blue:#5cc0f2;--navy:#9ec2ff;--ok:#5fd3b0;--okbg:#10332a;--warnbg:#3a2c0a;--warn:#ffd27a}}
 *{box-sizing:border-box}html,body{margin:0;height:100%}
 body{background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;display:flex;justify-content:center;align-items:center}
@@ -147,12 +147,12 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,te
 var $ = function(i){ return document.getElementById(i); };
 var DATA = {
   campuses:[{code:"ist",name:"SRM IST",address:"Main Gate, SRM IST",sec:"+15550111",med:"+15550142"},{code:"trp",name:"SRM TRP",address:"Main Gate, SRM TRP",sec:"+15550211",med:"+15550242"}],
-  friends:["Rithika","Lakshana","Samyktha"],
+  friends:["Rithika","Lakshana","Samyuktha"],
   contacts:{
-    ist:[{category:"Medical",name:"SRM IST Health Centre",phone:"+15550142",info:"Block B, near main gate",verified:1},{category:"Security",name:"Campus Security Control",phone:"+15550111",info:"Admin building, room 1",verified:1},{category:"Counselling",name:"Student Counselling Cell",phone:"+15550163",info:"Library annex, first floor",verified:1},{category:"Fire",name:"Fire Safety Officer",phone:"+15550177",info:"Utility block",verified:1}],
-    trp:[{category:"Medical",name:"SRM TRP Health Centre",phone:"+15550242",info:"Next to the sports complex",verified:1},{category:"Security",name:"SRM TRP Gate Security",phone:"+15550211",info:"Main gate",verified:1},{category:"Counselling",name:"Wellbeing Centre",phone:"+15550263",info:"Hostel block C",verified:1},{category:"Fire",name:"Fire Control Room",phone:"+15550277",info:"Behind the workshop block",verified:0}]
+    ist:[{category:"Medical",name:"SRM IST Health Centre",phone:"+15550142",info:"Next to the Central Liberary",verified:1},{category:"Security",name:"Campus Security Control",phone:"+15550111",info:"Admin building, room 1",verified:1},{category:"Counselling",name:"Student Counselling Cell",phone:"+15550163",info:"Library annex, first floor",verified:1},{category:"Fire",name:"Fire Safety Officer",phone:"+15550177",info:"Utility block",verified:1}],
+    trp:[{category:"Medical",name:"SRM TRP Health Centre",phone:"+15550242",info:"Next to the Central Liberary",verified:1},{category:"Security",name:"SRM TRP Gate Security",phone:"+15550211",info:"Main gate",verified:1},{category:"Counselling",name:"Wellbeing Centre",phone:"+15550263",info:"Hostel block C",verified:1},{category:"Fire",name:"Fire Control Room",phone:"+15550277",info:"Behind the workshop block",verified:0}]
   },
-  broadcasts:["Road closure near Gate 3 until 6 pm. Use Gate 2.","Safety drill tomorrow at 11 am in all hostels."]
+  broadcasts:["Road closure near Auditorium until 6 pm. Use Main.","Safety drill tomorrow at 11 am in all hostels."]
 };
 var KEY = "campusSafeData";
 var store = {feed:{ist:[],trp:[]}, tips:[], walks:[], n:0};
